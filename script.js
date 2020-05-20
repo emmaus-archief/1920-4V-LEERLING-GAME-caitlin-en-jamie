@@ -37,7 +37,7 @@ var vijandImage;
 var score = 0; // aantal behaalde punten
 
 function preload() {
-    vijandImage = loadImage('plaatjes/plaatje_raket.png');
+    vijandImage = image('plaatjes/plaatje_raket.png');
 }
 
 
@@ -197,7 +197,7 @@ function draw() {
       }
 
       tekenVeld();
-      tekenVijand(vijandX, vijandY);
+      tekenVijand (vijandenX, vijandenY);
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
