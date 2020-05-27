@@ -30,9 +30,9 @@ var kogelY = 0;    // y-positie van kogel
 const SPEELVELDBREEDTE = 1280;
 const SPEELVELDHOOGHTE = 720;
 
-var vijandenX = [100,110];   // x-positie van vijand
-var vijandenY = [100,130,150];   // y-positie van vijand
-var vijandenSnelheid = [3,5,7]; // horizontale snelheid van vijand
+var vijandenX = [];   // x-positie van vijand
+var vijandenY = [];   // y-positie van vijand
+var vijandenSnelheid = []; // horizontale snelheid van vijand
 var vijandYSnelheid = -2; // verticale snelheid van vijand
 var vijandImage;
 
