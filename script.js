@@ -5,7 +5,6 @@
 /* Game opdracht
    Informatica - Emmauscollege Rotterdam
    Template voor een game in JavaScript met de p5 library
-
    Begin met dit template voor je game opdracht,
    voeg er je eigen code aan toe.
  */
@@ -28,12 +27,20 @@ var spelerY = 100; // y-positie van speler
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
 
-var vijandX = 0;   // x-positie van vijand
-var vijandY = 0;   // y-positie van vijand
+const SPEELVELDBREEDTE = 1280;
+const SPEELVELDHOOGHTE = 720;
+
+var vijandenX = [100,110];   // x-positie van vijand
+var vijandenY = [100,130,150];   // y-positie van vijand
+var vijandenSnelheid = [3,5,7]; // horizontale snelheid van vijand
+var vijandYSnelheid = -2; // verticale snelheid van vijand
+var vijandImage;
 
 var score = 0; // aantal behaalde punten
 
-
+function preload() {
+    vijandImage = loadImage('afbeeldingen/plaatje_raket.png');
+}
 
 
 
@@ -46,7 +53,7 @@ var score = 0; // aantal behaalde punten
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  fill("#AD1203");
+  fill("purple");
   rect(20, 20, width - 2 * 20, height - 2 * 20);
 };
 
@@ -57,9 +64,8 @@ var tekenVeld = function () {
  * @param {number} y y-coördinaat
  */
 var tekenVijand = function(x, y) {
-    fill("red");
-  ellipse (100,100,50,50);  
-
+    fill('red');
+    rect(50,50,50,50);
 };
 
 
@@ -81,7 +87,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  ellipse(mouseX, mouseY, 50, 50);
+  image(vijandImage, mouseX, mouseY);
 };
 
 
@@ -89,7 +95,15 @@ var tekenSpeler = function(x, y) {
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
 var beweegVijand = function() {
-    
+    for (var i = 0; i < vijandenX.length; i++) {
+        vijandenY[i] = vijandenY[i] + vijandenSnelheid[i];
+
+        if (vijandenY[i] > 720 + 20) {
+            vijandenY[i] = random(-250, -30);
+            vijandenX[i] = random(20, 1280 -20);
+            vijandenSnelheid[i] = random(2, 10);
+        }
+    }
 };
 
 
@@ -150,6 +164,12 @@ function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
 
+  for (var i =0; i < 5; i++ ) {
+      vijandenX.push(random(20, 1280 -20));
+      vijandenY.push(random(-250, -30));
+      vijandenSnelheid.push(random(2, 10));
+  }
+
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
 }
@@ -178,7 +198,7 @@ function draw() {
       }
 
       tekenVeld();
-      tekenVijand(vijandX, vijandY);
+      tekenVijand (vijandenX, vijandenY);
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
