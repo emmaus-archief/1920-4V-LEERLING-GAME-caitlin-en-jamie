@@ -66,6 +66,7 @@ var tekenVeld = function () {
 var tekenVijand = function(x, y) {
     fill('red');
     rect(50,50,50,50);
+
 };
 
 
