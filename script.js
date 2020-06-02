@@ -23,6 +23,7 @@ var spelStatus = SPELEN;
 
 var spelerX = 200; // x-positie van speler
 var spelerY = 100; // y-positie van speler
+var spelerImage;
 
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
@@ -39,7 +40,8 @@ var vijandImage;
 var score = 0; // aantal behaalde punten
 
 function preload() {
-    vijandImage = loadImage('afbeeldingen/plaatje_raket.png');
+    spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
+    vijandImage = loadImage('afbeeldingen/astroid.png')
 }
 
 
@@ -88,7 +90,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  image(vijandImage, mouseX, mouseY);
+  image(spelerImage, mouseX, mouseY);
 };
 
 
