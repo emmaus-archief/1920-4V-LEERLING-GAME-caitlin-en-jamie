@@ -41,9 +41,10 @@ var score = 0; // aantal behaalde punten
 
 function preload() {
     spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
-    vijandImage = loadImage('afbeeldingen/astroid.png')
+    vijandImage = loadImage('afbeeldingen/asteroid.png')
 }
 
+let vijanden = [];
 
 
 /* ********************************************* */
@@ -97,8 +98,10 @@ var tekenSpeler = function(x, y) {
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
-var beweegVijand = function() {
-    for (var i = 0; i < vijandenX.length; i++) {
+/* var beweegVijand = function() {
+    this.x = this.x + random(-4, 4);
+    this.y = this.y + random(-4, 4);
+    /* for (var i = 0; i < vijandenX.length; i++) {
         vijandenY[i] = vijandenY[i] + vijandenSnelheid[i];
 
         if (vijandenY[i] > 720 + 20) {
@@ -106,8 +109,8 @@ var beweegVijand = function() {
             vijandenX[i] = random(20, 1280 -20);
             vijandenSnelheid[i] = random(2, 10);
         }
-    }
-};
+    } 
+}; */
 
 
 /**
@@ -133,9 +136,51 @@ var beweegSpeler = function() {
  */
 var checkVijandGeraakt = function() {
 
-  return false;
+return false;
 };
 
+class vijand {
+    constructor(x, y, radius = 50) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.brightness = 0;
+    }
+    
+    intersects(other) {
+    let afstandVijanden = dist(this.x, this.y, other.x, other.y);
+        if (afstandVijanden < this.radius + other.radius) {
+            return true;
+            } else {
+                return false;
+            }
+        }
+    
+    changeColor(licht) {
+        this.helderheid = licht;
+    }
+
+    contains(px, py) {
+        let d = dist(px, py, this.x, this.y);
+        if (d < this.radius) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    move() {
+    this.x = this.x + random(-4, 4);
+    this.y = this.y + random(-4, 4);
+    }
+    
+    show() {
+    stroke(255);
+    strokeWeight(5);
+    fill(51);
+    ellipse(this.x, this.y, this.radius * 2);
+  }
+}
 
 /**
  * Zoekt uit of de speler is geraakt
@@ -165,17 +210,25 @@ var checkGameOver = function() {
  */
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
+  background('blue');
   createCanvas(1280, 720);
-
-  for (var i =0; i < 5; i++ ) {
+  for (let i = 0; i < 20; i++) {
+    let x = random(width);
+    let y = random(height);
+    let radius = random(10, 50);
+    vijanden[i] = new vijand(x, y, radius);
+  }
+  
+}
+   /* for (var i =0; i < 5; i++ ) {
       vijandenX.push(random(20, 1280 -20));
       vijandenY.push(random(-250, -30));
       vijandenSnelheid.push(random(2, 10));
-  }
+  } */
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
-  background('blue');
-}
+  
+
 
 
 /**
@@ -186,10 +239,27 @@ function setup() {
 function draw() {
   switch (spelStatus) {
     case SPELEN:
-      beweegVijand();
+      // beweegVijand();
       beweegKogel();
       beweegSpeler();
-      
+    
+    tekenVeld();
+    for (let v of vijanden) {
+        v.show();
+        v.move();
+        let overlappen = false;
+        for (let other of vijanden) {
+            if (v !== other && v.intersects(other)) {
+                overlappen = true
+            }
+        }
+        if (overlappen) {
+            v.changeColor(255);
+        } else {
+            v.changeColor(0);
+        }
+    }
+
       if (checkVijandGeraakt()) {
         // punten erbij
         // nieuwe vijand maken
@@ -200,7 +270,7 @@ function draw() {
         // eventueel: nieuwe speler maken
       }
 
-      tekenVeld();
+      
       tekenVijand (vijandenX, vijandenY);
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
