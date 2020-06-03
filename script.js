@@ -35,6 +35,10 @@ const AANTALVIJANDEN = 10;
 const VIJANDDIAMETER = 40;
 var vijandenX = 200;
 var vijandenY = 100;
+var vijandenSnelheid = 2;
+
+var stopwatchMin = 0; //stopwatch in min
+var stopwatchSec = 0; //stopwatch in sec 
 
 var score = 0; // aantal behaalde punten
 
@@ -206,7 +210,6 @@ function draw() {
 
       tekenVeld();
       tekenVijand (vijandenX, vijandenY);
-      tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
       if (checkGameOver()) {
