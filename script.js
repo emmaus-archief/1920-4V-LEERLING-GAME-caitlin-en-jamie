@@ -36,11 +36,17 @@ const VIJANDDIAMETER = 40;
 var vijandenX = 200;
 var vijandenY = 100;
 var vijandenSnelheid = 2;
+var vijanden = 6;
 
 var stopwatchMin = 0; //stopwatch in min
 var stopwatchSec = 0; //stopwatch in sec 
 
 var score = 0; // aantal behaalde punten
+
+var img 
+var img2
+var backGroundImage
+var loadImage 
 
 
 
@@ -55,10 +61,15 @@ var score = 0; // aantal behaalde punten
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  fill("purple");
-  rect(20, 20, width - 2 * 20, height - 2 * 20);
+  rect(backGroundImage, 20, 20, width - 2 * 20, height - 2 * 20);
 };
 
+function preload () {
+    img = loadImage('plaatjes/plaatje_raket.png');
+    img2 = loadImage('plaatje/asteroid.png');
+    backGroundImage = loadImage('plaatjes/space.png');
+    
+};
 
 /**
  * Tekent de vijand
@@ -79,12 +90,25 @@ var tekenVijand = function(x, y) {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-  fill("white");
-  image(vijandImage, mouseX, mouseY);
+  image(img, mouseX, mouseY);
 };
 
 function tekenTimer() {
-    text(stopwatchMin + ' : ' + stopwatchSec, 50, 50, 50, 50);
+    var extraNul = ""
+    if (stopwatchSec < 10) {
+            extraNul = "0"
+    }
+
+    if (spelStatus === SPELEN) {
+        fill("white");
+        text(stopwatchMin + ":" + extraNul + stopwatchSec, 50, 50, 100, 100);
+    }
+
+    if (spelStatus === GAMEOVER) {
+        fill('white');
+        text(stopwatchMin + ";" + extraNul + stopwatchSec, 690, 380, 100, 100);
+    }
+
 }
 
 /**
@@ -117,16 +141,17 @@ var beweegSpeler = function() {
 
 };
 
+function genereerVijanden() {
+    for(var i = 0; i < AANTALVIJANDEN; i++) {
+        vijanden[i] = new Enemy (random(20, 1100), random(20, 150), random(2, 7));
+    }
+}
 
-/**
- * Zoekt uit of de vijand is geraakt
- * @returns {boolean} true als vijand is geraakt
- */
-var checkVijandGeraakt = function() {
-
-  return false;
-};
-
+function respawnVijand(){
+    for(var i = 0; i < vijanden.length; i++) {
+        if (vijanden[i])
+    }
+}
 
 /**
  * Zoekt uit of de speler is geraakt
