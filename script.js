@@ -23,26 +23,32 @@ var spelStatus = SPELEN;
 
 var spelerX = 200; // x-positie van speler
 var spelerY = 100; // y-positie van speler
-var spelerImage;
-
-var kogelX = 0;    // x-positie van kogel
-var kogelY = 0;    // y-positie van kogel
+var spelerXSnelheid = 8;
+var spelerYSnelheid = 6;
 
 const SPEELVELDBREEDTE = 1280;
 const SPEELVELDHOOGHTE = 720;
+const SPEELVELDRANDBREEDTE = 20;
+const SPELERDIAMETER =80;
 
-var vijandenX = [];   // x-positie van vijand
-var vijandenY = [];   // y-positie van vijand
-var vijandenSnelheid = []; // horizontale snelheid van vijand
-var vijandYSnelheid = -2; // verticale snelheid van vijand
-var vijandImage;
+const AANTALVIJANDEN = 10;
+const VIJANDDIAMETER = 40;
+var vijandenX = 200;
+var vijandenY = 100;
+var vijandenSnelheid = 2;
+var vijanden = 6;
+
+var stopwatchMin = 0; //stopwatch in min
+var stopwatchSec = 0; //stopwatch in sec 
 
 var score = 0; // aantal behaalde punten
 
-function preload() {
-    spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
-    vijandImage = loadImage('afbeeldingen/astroid.png')
-}
+var img 
+var img2
+var backGroundImage
+var loadImage 
+
+
 
 
 
@@ -55,10 +61,15 @@ function preload() {
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  fill("purple");
-  rect(20, 20, width - 2 * 20, height - 2 * 20);
+  rect(backGroundImage, 20, 20, width - 2 * 20, height - 2 * 20);
 };
 
+function preload () {
+    img = loadImage('plaatjes/plaatje_raket.png');
+    img2 = loadImage('plaatje/asteroid.png');
+    backGroundImage = loadImage('plaatjes/space.png');
+    
+};
 
 /**
  * Tekent de vijand
@@ -72,16 +83,6 @@ var tekenVijand = function(x, y) {
 };
 
 
-/**
- * Tekent de kogel of de bal
- * @param {number} x x-coördinaat
- * @param {number} y y-coördinaat
- */
-var tekenKogel = function(x, y) {
-
-
-};
-
 
 /**
  * Tekent de speler
@@ -89,10 +90,26 @@ var tekenKogel = function(x, y) {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-  fill("white");
-  image(spelerImage, mouseX, mouseY);
+  image(img, mouseX, mouseY);
 };
 
+function tekenTimer() {
+    var extraNul = ""
+    if (stopwatchSec < 10) {
+            extraNul = "0"
+    }
+
+    if (spelStatus === SPELEN) {
+        fill("white");
+        text(stopwatchMin + ":" + extraNul + stopwatchSec, 50, 50, 100, 100);
+    }
+
+    if (spelStatus === GAMEOVER) {
+        fill('white');
+        text(stopwatchMin + ";" + extraNul + stopwatchSec, 690, 380, 100, 100);
+    }
+
+}
 
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
@@ -101,20 +118,10 @@ var beweegVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
         vijandenY[i] = vijandenY[i] + vijandenSnelheid[i];
 
-        if (vijandenY[i] > 720 + 20) {
-            vijandenY[i] = random(-250, -30);
-            vijandenX[i] = random(20, 1280 -20);
-            vijandenSnelheid[i] = random(2, 10);
+        if (vijandenY[i] > SPEELVELDHOOGHTE + 20) {
+            geefVijandNieuwePositie(i)
         }
     }
-};
-
-
-/**
- * Updatet globale variabelen met positie van kogel of bal
- */
-var beweegKogel = function() {
-
 };
 
 
@@ -126,16 +133,24 @@ var beweegSpeler = function() {
 
 };
 
+function genereerVijanden() {
+    for(var i = 0; i < AANTALVIJANDEN; i++) {
+        vijanden[i] = new Enemy (random(20, 1100), random(20, 150), random(2, 7));
+    }
+}
 
-/**
- * Zoekt uit of de vijand is geraakt
- * @returns {boolean} true als vijand is geraakt
- */
-var checkVijandGeraakt = function() {
-
-  return false;
-};
-
+function respawnVijand(){
+    for(var i = 0; i < vijanden.length; i++) {
+        vijanden[i].drawAndMove();
+        if(vijanden[i].isBuitenCanvas()) {
+            vijanden[i] = new Enemy (random(20, 1100), random(20, 150), random(2, 7));
+        }
+        if(vijanden[i].raaktSpeler()) {
+            spelerHP--;
+            vijanden[i] = new Enemy (random(20, 1100), random( 20 ,150), random(2, 7));
+        }
+    }
+}
 
 /**
  * Zoekt uit of de speler is geraakt
@@ -157,6 +172,20 @@ var checkGameOver = function() {
   return false;
 };
 
+function updateTimer() {
+    stopwatchSec++;
+
+    if (stopwatchSec == 60) {
+        stopwatchMin++;
+        stopwatchSec = 0;
+    }
+}
+
+function geefVijandNieuwePositie(nummer) {
+    vijandenX[nummer] = (random(20, SPEELVELDBREEDTE - 20));
+    vijandenY[nummer] = (random(-250, -30));
+    vijandenSnelheid[nummer] = (random(2, 10));
+}
 
 /**
  * setup
@@ -165,13 +194,16 @@ var checkGameOver = function() {
  */
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
-  createCanvas(1280, 720);
+  createCanvas(SPEELVELDBREEDTE, SPEELVELDHOOGHTE);
 
-  for (var i =0; i < 5; i++ ) {
-      vijandenX.push(random(20, 1280 -20));
-      vijandenY.push(random(-250, -30));
-      vijandenSnelheid.push(random(2, 10));
+  for (var i =0; i < AANTALVIJANDEN; i++ ) {
+      geefVijandNieuwePositie(i);
   }
+
+  setInterval(updateTimer, 1000);
+
+  console.log(vijandenX);
+  console.log(vijandenSnelheid);
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
@@ -200,14 +232,21 @@ function draw() {
         // eventueel: nieuwe speler maken
       }
 
+      background(backGroundImage);
+      beweegSpeler(); 
+      respawnVijand();
       tekenVeld();
-      tekenVijand (vijandenX, vijandenY);
-      tekenKogel(kogelX, kogelY);
-      tekenSpeler(spelerX, spelerY);
+        tekenSpeler(spelerX, spelerY);
+        tekenTimer();
+      checkGameOver();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
+        background;
+        tekenTimer();
+        clearTimeout();
       }
-      break;
+      case GAMEOVER;
+      break; 
   }
 }
