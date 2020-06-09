@@ -219,7 +219,6 @@ function draw() {
   switch (spelStatus) {
     case SPELEN:
       beweegVijand();
-      beweegKogel();
       beweegSpeler();
       
       if (checkVijandGeraakt()) {
