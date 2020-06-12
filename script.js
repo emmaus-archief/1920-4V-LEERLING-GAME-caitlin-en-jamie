@@ -21,6 +21,8 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
+var achtergrondImage;
+
 var spelerX = 200; // x-positie van speler
 var spelerY = 100; // y-positie van speler
 var spelerImage;
@@ -41,7 +43,7 @@ var score = 0; // aantal behaalde punten
 
 function preload() {
     spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
-    vijandImage = loadImage('afbeeldingen/asteroid.png')
+    vijandImage = loadImage('afbeeldingen/asteroid.png');
 }
 
 let vijanden = [];
@@ -56,8 +58,7 @@ let vijanden = [];
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  fill("purple");
-  rect(20, 20, width - 2 * 20, height - 2 * 20);
+  rect(50, 50, width - 2 * 20, height - 2 * 20);
 };
 
 
@@ -67,9 +68,7 @@ var tekenVeld = function () {
  * @param {number} y y-coördinaat
  */
 var tekenVijand = function(x, y) {
-    fill('red');
-    rect(50,50,50,50);
-
+    image(vijandImage, 50, 50);
 };
 
 
@@ -90,7 +89,6 @@ var tekenKogel = function(x, y) {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-  fill("white");
   image(spelerImage, mouseX, mouseY);
 };
 
