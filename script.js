@@ -43,10 +43,10 @@ var stopwatchSec = 0; //stopwatch in sec
 
 var score = 0; // aantal behaalde punten
 
-var img 
-var img2
-var backGroundImage
-var loadImage 
+var img; 
+var img2;
+var backGroundImage;
+var loadImage;
 
 
 
@@ -77,9 +77,7 @@ function preload () {
  * @param {number} y y-coördinaat
  */
 var tekenVijand = function(x, y) {
-    fill('red');
-    rect(50,50,50,50);
-
+    image(img2,50,50);
 };
 
 
@@ -93,6 +91,7 @@ var tekenSpeler = function(x, y) {
   image(img, mouseX, mouseY);
 };
 
+/*
 function tekenTimer() {
     var extraNul = ""
     if (stopwatchSec < 10) {
@@ -109,11 +108,12 @@ function tekenTimer() {
         text(stopwatchMin + ";" + extraNul + stopwatchSec, 690, 380, 100, 100);
     }
 
-}
+} */
 
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
+/*
 var beweegVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
         vijandenY[i] = vijandenY[i] + vijandenSnelheid[i];
@@ -133,12 +133,14 @@ var beweegSpeler = function() {
 
 };
 
+/*
 function genereerVijanden() {
     for(var i = 0; i < AANTALVIJANDEN; i++) {
         vijanden[i] = new Enemy (random(20, 1100), random(20, 150), random(2, 7));
     }
-}
+} */
 
+/*
 function respawnVijand(){
     for(var i = 0; i < vijanden.length; i++) {
         vijanden[i].drawAndMove();
@@ -150,7 +152,7 @@ function respawnVijand(){
             vijanden[i] = new Enemy (random(20, 1100), random( 20 ,150), random(2, 7));
         }
     }
-}
+} */
 
 /**
  * Zoekt uit of de speler is geraakt
@@ -172,6 +174,7 @@ var checkGameOver = function() {
   return false;
 };
 
+/*
 function updateTimer() {
     stopwatchSec++;
 
@@ -186,6 +189,7 @@ function geefVijandNieuwePositie(nummer) {
     vijandenY[nummer] = (random(-250, -30));
     vijandenSnelheid[nummer] = (random(2, 10));
 }
+*/
 
 /**
  * setup
@@ -196,6 +200,7 @@ function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(SPEELVELDBREEDTE, SPEELVELDHOOGHTE);
 
+  /*
   for (var i =0; i < AANTALVIJANDEN; i++ ) {
       geefVijandNieuwePositie(i);
   }
@@ -205,6 +210,8 @@ function setup() {
   console.log(vijandenX);
   console.log(vijandenSnelheid);
 
+  */
+ 
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
 }
@@ -215,6 +222,7 @@ function setup() {
  * de code in deze functie wordt meerdere keren per seconde
  * uitgevoerd door de p5 library, nadat de setup functie klaar is
  */
+/*
 function draw() {
   switch (spelStatus) {
     case SPELEN:
@@ -245,7 +253,7 @@ function draw() {
         tekenTimer();
         clearTimeout();
       }
-      case GAMEOVER;
+      case GAMEOVER:
       break; 
   }
-}
+} */
