@@ -21,6 +21,8 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
+var achtergrondImage;
+
 var spelerX = 200; // x-positie van speler
 var spelerY = 100; // y-positie van speler
 var spelerImage;
@@ -43,10 +45,14 @@ var score = 0; // aantal behaalde punten
 
 function preload() {
     spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
+<<<<<<< HEAD
     vijandImageGroot = loadImage('afbeeldingen/asteroid_groot.png');
     vijandImageMiddel = loadImage('afbeeldingen/asteroid_middel.png');
     vijandImageKlein = loadImage('afbeeldingen/asteroid_klein.png');
     achtergrond = loadImage('afbeeldingen/ruimte.jpg');
+=======
+    vijandImage = loadImage('afbeeldingen/asteroid.png');
+>>>>>>> 82106f8e2556ced9427087c582124515adbf414e
 }
 
 
@@ -60,15 +66,20 @@ function preload() {
  * Tekent het speelveld
  */
 var tekenVeld = function () {
+<<<<<<< HEAD
   
   rect(20, 20, width - 2 * 20, height - 2 * 20);
   image(achtergrond, 20, 20, width - 2 * 20, height - 2 * 20);
+=======
+  rect(50, 50, width - 2 * 20, height - 2 * 20);
+>>>>>>> 82106f8e2556ced9427087c582124515adbf414e
 };
 
 
 /**
  * Tekent de vijand
  */
+<<<<<<< HEAD
 var tekenVijandGroot = function() {
     for (var i = 0; i < vijandenX.length; i++) {
         image(vijandImageGroot, vijandenX[i], vijandenY[i]);
@@ -79,6 +90,10 @@ var tekenVijandMiddel = function() {
     for (var i = 0; i < vijandenX.length; i++) {
         image(vijandImageMiddel, vijandenX[i], vijandenY[i]);
     };
+=======
+var tekenVijand = function(x, y) {
+    image(vijandImage, 50, 50);
+>>>>>>> 82106f8e2556ced9427087c582124515adbf414e
 };
 
 var tekenVijandKlein = function() {
@@ -126,8 +141,12 @@ function nieuweVijand() {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
+<<<<<<< HEAD
   fill("white");
   image(spelerImage, spelerX, spelerY);
+=======
+  image(spelerImage, mouseX, mouseY);
+>>>>>>> 82106f8e2556ced9427087c582124515adbf414e
 };
 
 var beweegSpeler = function() {
