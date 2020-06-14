@@ -33,26 +33,26 @@ var achtergrond;
 
 const SPEELVELDBREEDTE = 1280;
 const SPEELVELDHOOGTE = 720;
-const AANTALVIJANDENGROOT = 5;
-const AANTALVIJANDENMIDDEL = 10;
-const AANTALVIJANDENKLEIN = 10;
+const AANTALVIJANDENGROOT = 2;
+const AANTALVIJANDENMIDDEL = 1;
+const AANTALVIJANDENKLEIN = 2;
 
-var vijandenX = [];   // x-positie van vijand
-var vijandenY = [];   // y-positie van vijand
+var vijandenGrootX = [];   // x-positie van vijand
+var vijandenGrootY = [];   // y-positie van vijand
+var vijandenMiddelX = [];   
+var vijandenMiddelY = [];   
+var vijandenKleinX = [];   
+var vijandenKleinY = [];   
 var vijandenSnelheid = []; // horizontale snelheid van vijand
 
 var score = 0; // aantal behaalde punten
 
 function preload() {
     spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
-<<<<<<< HEAD
     vijandImageGroot = loadImage('afbeeldingen/asteroid_groot.png');
     vijandImageMiddel = loadImage('afbeeldingen/asteroid_middel.png');
     vijandImageKlein = loadImage('afbeeldingen/asteroid_klein.png');
     achtergrond = loadImage('afbeeldingen/ruimte.jpg');
-=======
-    vijandImage = loadImage('afbeeldingen/asteroid.png');
->>>>>>> 82106f8e2556ced9427087c582124515adbf414e
 }
 
 
@@ -66,39 +66,26 @@ function preload() {
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-<<<<<<< HEAD
   
   rect(20, 20, width - 2 * 20, height - 2 * 20);
   image(achtergrond, 20, 20, width - 2 * 20, height - 2 * 20);
-=======
-  rect(50, 50, width - 2 * 20, height - 2 * 20);
->>>>>>> 82106f8e2556ced9427087c582124515adbf414e
 };
 
 
 /**
  * Tekent de vijand
  */
-<<<<<<< HEAD
-var tekenVijandGroot = function() {
-    for (var i = 0; i < vijandenX.length; i++) {
-        image(vijandImageGroot, vijandenX[i], vijandenY[i]);
+var tekenVijand = function() {
+    for (var i = 0; i < vijandenGrootX.length; i++) {
+        image(vijandImageGroot, vijandenGrootX[i], vijandenGrootY[i]);
     };
-};
 
-var tekenVijandMiddel = function() {
-    for (var i = 0; i < vijandenX.length; i++) {
-        image(vijandImageMiddel, vijandenX[i], vijandenY[i]);
+    for (var j = 0; j < vijandenMiddelX.length; j++) {
+        image(vijandImageMiddel, vijandenMiddelX[j], vijandenMiddelY[j]);
     };
-=======
-var tekenVijand = function(x, y) {
-    image(vijandImage, 50, 50);
->>>>>>> 82106f8e2556ced9427087c582124515adbf414e
-};
 
-var tekenVijandKlein = function() {
-    for (var i = 0; i < vijandenX.length; i++) {
-        image(vijandImageKlein, vijandenX[i], vijandenY[i]);
+    for (var k = 0; k < vijandenKleinX.length; k++) {
+        image(vijandImageKlein, vijandenKleinX[k], vijandenKleinY[k]);
     };
     
 };
@@ -107,22 +94,42 @@ var tekenVijandKlein = function() {
  * Beweegt vijand
  */
 var beweegVijand = function() {
-    for (var i = 0; i < vijandenX.length; i++) {
-        vijandenY[i] = vijandenY[i] + vijandenSnelheid[i];
+    for (var i = 0; i < vijandenGrootX.length; i++) {
+        vijandenGrootY[i] = vijandenGrootY[i] + vijandenSnelheid[i];
 
-        if (vijandenY[i] > SPEELVELDHOOGTE) {
+        if (vijandenGrootY[i] > SPEELVELDHOOGTE) {
             vijandWeg(i);
             nieuweVijand();
         }
-    }
+    };
+    for (var j = 0; j < vijandenMiddelX.length; j++) {
+        vijandenMiddelY[j] = vijandenMiddelY[j] + vijandenSnelheid[j];
+
+        if (vijandenMiddelY[j] > SPEELVELDHOOGTE) {
+            vijandWeg(j);
+            nieuweVijand();
+        }
+    };
+    for (var k = 0; k < vijandenKleinX.length; k++) {
+        vijandenKleinY[k] = vijandenKleinY[k] + vijandenSnelheid[k];
+
+        if (vijandenKleinY[k] > SPEELVELDHOOGTE) {
+            vijandWeg(k);
+            nieuweVijand();
+        }
+    };
 };
 
 /**
  * Haalt vijand weg
  */
 function vijandWeg(nummer) {
-    vijandenX.splice(nummer, 1);
-    vijandenY.splice(nummer, 1)
+    vijandenGrootX.splice(nummer, 1);
+    vijandenGrootY.splice(nummer, 1);
+    vijandenMiddelX.splice(nummer, 1);
+    vijandenMiddelY.splice(nummer, 1);
+    vijandenKleinX.splice(nummer, 1);
+    vijandenKleinY.splice(nummer, 1);
     vijandenSnelheid.splice(nummer, 1);
 }
 
@@ -130,8 +137,12 @@ function vijandWeg(nummer) {
  * Maakt nieuwe vijand 
  */
 function nieuweVijand() {
-    vijandenX.push(random(5, SPEELVELDBREEDTE - 10))
-    vijandenY.push(random(-500, -100));
+    vijandenGrootX.push(random(5, SPEELVELDBREEDTE - 10))
+    vijandenGrootY.push(random(-500, -100));
+    vijandenMiddelX.push(random(5, SPEELVELDBREEDTE - 10))
+    vijandenMiddelY.push(random(-500, -100));
+    vijandenKleinX.push(random(5, SPEELVELDBREEDTE - 10))
+    vijandenKleinY.push(random(-500, -100));
     vijandenSnelheid.push(random(8, 15));
 }
 
@@ -141,12 +152,8 @@ function nieuweVijand() {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-<<<<<<< HEAD
   fill("white");
   image(spelerImage, spelerX, spelerY);
-=======
-  image(spelerImage, mouseX, mouseY);
->>>>>>> 82106f8e2556ced9427087c582124515adbf414e
 };
 
 var beweegSpeler = function() {
@@ -220,13 +227,13 @@ function setup() {
 
   for (var i = 0; i < AANTALVIJANDENGROOT; i++) {
       nieuweVijand();
-  }
-  for (var i = 0; i < AANTALVIJANDENMIDDEL; i++) {
+  };
+  for (var j = 0; j < AANTALVIJANDENMIDDEL; j++) {
       nieuweVijand();
-  }
-  for (var i = 0; i < AANTALVIJANDENKLEIN; i++) {
+  };
+  for (var k = 0; k < AANTALVIJANDENKLEIN; k++) {
       nieuweVijand();
-  }
+  };
     
 }
 
@@ -256,9 +263,7 @@ function draw() {
       
       
     tekenSpeler(spelerX, spelerY);
-    tekenVijandGroot();
-    tekenVijandMiddel();
-    tekenVijandKlein();
+    tekenVijand();
     if (checkGameOver()) {
         spelStatus = GAMEOVER;
       }
