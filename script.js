@@ -60,6 +60,31 @@ function preload() {
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
+ 
+// teken startscherm//
+var tekenStartscherm = function () {
+    background (0,0, 255);
+        fill('blue');
+        textSize(28);
+        text('Druk op spatiebalk om te starten', 475, 530);
+
+        fill(0, 0, 255);
+        textSize (85);
+        textFont('Courier New');
+        text('METEOR GARDEN', 400, 140);
+
+    if (keyIsPressed === true && key === "") {
+        console.log ("pressed space");
+        spelStatus = SPELEN;
+        aantalLevens = 1;
+        score = 0;
+
+    }
+};
+        
+
+        
+
 
 
 /**
@@ -248,29 +273,31 @@ function setup() {
  */
 function draw() {
   switch (spelStatus) {
+    case STARTSCHERM:
+        tekenStartscherm();
+         if (keyIsDown(32)) {
+             spelStatus = SPELEN;
+         }
+         break;
+        
+
+
     case SPELEN:
     beweegVijand();
     beweegSpeler();
     tekenVeld();
-            
-      if (checkVijandGeraakt()) {
-        // punten erbij
-        // nieuwe vijand maken
-      }
-      
-      if (checkSpelerGeraakt()) {
-        // leven eraf of gezondheid verlagen
-        // eventueel: nieuwe speler maken
-      }
 
-      
-      
-    tekenSpeler(spelerX, spelerY);
+    case GAMEOVER:
+        gameOverscherm();
+        
+    tekenVeld();
     tekenVijand();
+    tekenSpeler();
+    
     if (checkGameOver()) {
-        spelStatus = GAMEOVER;
-      }
-      break;
+        spelStatus= GAMEOVER;
+    }
+    break;
   }
 }
 
