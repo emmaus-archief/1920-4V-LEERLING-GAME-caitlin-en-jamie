@@ -97,7 +97,7 @@ var beweegVijand = function() {
     for (var i = 0; i < vijandenGrootX.length; i++) {
         vijandenGrootY[i] = vijandenGrootY[i] + vijandenSnelheid[i];
 
-        if (vijandenGrootY[i] > SPEELVELDHOOGTE) {
+        if (vijandenGrootY[i] > SPEELVELDHOOGTE + 200) {
             vijandWeg(i);
             nieuweVijand();
         }
@@ -105,7 +105,7 @@ var beweegVijand = function() {
     for (var j = 0; j < vijandenMiddelX.length; j++) {
         vijandenMiddelY[j] = vijandenMiddelY[j] + vijandenSnelheid[j];
 
-        if (vijandenMiddelY[j] > SPEELVELDHOOGTE) {
+        if (vijandenMiddelY[j] > SPEELVELDHOOGTE + 200) {
             vijandWeg(j);
             nieuweVijand();
         }
@@ -113,7 +113,7 @@ var beweegVijand = function() {
     for (var k = 0; k < vijandenKleinX.length; k++) {
         vijandenKleinY[k] = vijandenKleinY[k] + vijandenSnelheid[k];
 
-        if (vijandenKleinY[k] > SPEELVELDHOOGTE) {
+        if (vijandenKleinY[k] > SPEELVELDHOOGTE + 200) {
             vijandWeg(k);
             nieuweVijand();
         }
@@ -156,6 +156,9 @@ var tekenSpeler = function(x, y) {
   image(spelerImage, spelerX, spelerY);
 };
 
+/**
+ * Beweegt speler met muis
+ */
 var beweegSpeler = function() {
     var muisXPos = mouseX;
     var muisYPos = mouseY;
