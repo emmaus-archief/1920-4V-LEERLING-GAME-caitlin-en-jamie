@@ -44,6 +44,7 @@ var score = 0; // aantal behaalde punten
 function preload() {
     spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
     vijandImage = loadImage('afbeeldingen/asteroid.png');
+    achtergrondImage = loadImage('afbeeldingen/space.png');
 }
 
 let vijanden = [];
@@ -52,13 +53,37 @@ let vijanden = [];
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
+ 
+// teken startscherm//
+switch (spelStatus) {
+    case UITLEG:
+        var mijnVar = 0;
+        background (0,0, 255);
+        fill('blue');
+        textSize(24);
+        text('Druk op spatiebalk om te starten', 200, 200, 500, 50);
+
+    if (keyIsPressed === true && key === "") {
+        console.log ("pressed space");
+        spelStatus = SPELEN;
+        aantalLevens = 1;
+        score = 0;
+
+    }
+    break; 
+    case SPELEN:
+        beweegVijand();
+        beweegSpeler();
+
+        
+}
 
 
 /**
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  rect(50, 50, width - 2 * 20, height - 2 * 20);
+  image(achtergrondImage, 0, 0, SPEELVELDBREEDTE, SPEELVELDHOOGHTE);
 };
 
 
@@ -69,17 +94,6 @@ var tekenVeld = function () {
  */
 var tekenVijand = function(x, y) {
     image(vijandImage, 50, 50);
-};
-
-
-/**
- * Tekent de kogel of de bal
- * @param {number} x x-coördinaat
- * @param {number} y y-coördinaat
- */
-var tekenKogel = function(x, y) {
-
-
 };
 
 
@@ -109,14 +123,6 @@ var tekenSpeler = function(x, y) {
         }
     } 
 }; */
-
-
-/**
- * Updatet globale variabelen met positie van kogel of bal
- */
-var beweegKogel = function() {
-
-};
 
 
 /**
