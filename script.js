@@ -16,10 +16,10 @@
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
 
-const UITLEG = 0;
+const STARTSCHERM = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
-var spelStatus = SPELEN;
+var spelStatus = 0;
 
 var achtergrondImage;
 
@@ -66,26 +66,16 @@ var tekenStartscherm = function () {
     background (0,0, 255);
         fill('blue');
         textSize(28);
-        text('Druk op spatiebalk om te starten', 475, 530);
+        text('Druk op spatiebalk om te starten', 475, 530, 575, 630);
 
         fill(0, 0, 255);
         textSize (85);
         textFont('Courier New');
-        text('METEOR GARDEN', 400, 140);
+        text('METEOR GARDEN', 400, 140, 500, 240);
 
-    if (keyIsPressed === true && key === "") {
-        console.log ("pressed space");
-        spelStatus = SPELEN;
-        aantalLevens = 1;
-        score = 0;
-
-    }
-};
-        
+    };      
 
         
-
-
 
 /**
  * Tekent het speelveld
@@ -168,7 +158,7 @@ function nieuweVijand() {
     vijandenMiddelY.push(random(-500, -100));
     vijandenKleinX.push(random(5, SPEELVELDBREEDTE - 10))
     vijandenKleinY.push(random(-500, -100));
-    vijandenSnelheid.push(random(8, 15));
+    vijandenSnelheid.push(random(5, 13));
 }
 
 /**
@@ -274,30 +264,39 @@ function setup() {
 function draw() {
   switch (spelStatus) {
     case STARTSCHERM:
-        tekenStartscherm();
-         if (keyIsDown(32)) {
-             spelStatus = SPELEN;
-         }
-         break;
+        rect(0,0,SPEELVELDBREEDTE,SPEELVELDHOOGTE);
+        fill('white');
+        textSize(35);
+        text('Druk op ENTER om te starten', 325, 200, SPEELVELDBREEDTE - 270, 300);
+        text('Elke seconde is een punt waard', 325, 100, 800, 100)
+        textFont('Courier New');
+        textSize(100);
+        text('METEOR GARDEN', 440, SPEELVELDHOOGTE / 2 + 25, 600, SPEELVELDHOOGTE / 2 + 200);
+        fill(51,51,255)
+        if (keyIsPressed === true && keyCode === 13) {
+            spelStatus = SPELEN;
+        }
+        break;
         
 
 
     case SPELEN:
     beweegVijand();
     beweegSpeler();
+    rect(0,0,SPEELVELDBREEDTE,SPEELVELDHOOGTE);
     tekenVeld();
-
-    case GAMEOVER:
-        gameOverscherm();
-        
-    tekenVeld();
-    tekenVijand();
     tekenSpeler();
+    tekenVijand();
+
     
     if (checkGameOver()) {
         spelStatus= GAMEOVER;
     }
     break;
+    case GAMEOVER:
+        gameOverscherm();
+    }
+    
   }
-}
+
 
