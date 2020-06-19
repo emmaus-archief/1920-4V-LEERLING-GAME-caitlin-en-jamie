@@ -170,8 +170,12 @@ var checkSpelerGeraakt = function() {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function() {
-    
-  return false;
+    var gameOver = false;
+    for 
+            gameOver= true;
+        }
+    }
+  return gameOver;
 };
 
 /*
