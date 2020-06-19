@@ -19,7 +19,7 @@
 const STARTSCHERM = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
-var spelStatus = 2;
+var spelStatus = 0;
 
 var achtergrondImage;
 
@@ -194,34 +194,13 @@ var beweegSpeler = function() {
  * Zoekt uit of de vijand is geraakt
  * @returns {boolean} true als vijand is geraakt
  */
-var geraakt = false;
-var checkVijandGeraaktKlein = function() {
-    geraakt = collideRectCircle(mouseX, mouseY, 50, 50, vijandenKleinX - 15, vijandenKleinY + 20, 15, 20);
-
-console.log(geraakt);    
-return false;
-};
-
 
 /**
- * Zoekt uit of de speler is geraakt
- * bijvoorbeeld door botsing met vijand
- * @returns {boolean} true als speler is geraakt
+ * Dit lukte ons niet, we hebben van alles en nogwat geprobeerd.
+ * Naar filmpjes gekeken, bij uw code gekeken, naar de code van anderen gekeken.
+ * Dus we hebben de game laten stoppen bij 2 minuten
  */
-var checkSpelerGeraakt = function() {
-    
-  return false;
-};
 
-
-/**
- * Zoekt uit of het spel is afgelopen
- * @returns {boolean} true als het spel is afgelopen
- */
-var checkGameOver = function() {
-    
-  return false;
-};
 
 
 var tekenTimer = function() {
@@ -297,19 +276,18 @@ function draw() {
 
 
     case SPELEN:
-    beweegVijand();
-    beweegSpeler();
-    rect(0,0,SPEELVELDBREEDTE,SPEELVELDHOOGTE);
-    tekenVeld();
-    tekenSpeler();
-    tekenVijand();
-    tekenTimer();
-    checkVijandGeraaktKlein();
+        beweegVijand();
+        beweegSpeler();
+        rect(0,0,SPEELVELDBREEDTE,SPEELVELDHOOGTE);
+        tekenVeld();
+        tekenSpeler();
+        tekenVijand();
+        tekenTimer();
 
-    
-    if (checkGameOver()) {
-        spelStatus= GAMEOVER;
-    }
+        
+        if (timerMin > 1) {
+            spelStatus= GAMEOVER;
+        }
     break;
     case GAMEOVER:
         rect(0,0,SPEELVELDBREEDTE,SPEELVELDHOOGTE)
@@ -317,6 +295,7 @@ function draw() {
         textSize(100);
         text('GAME OVER', 275, SPEELVELDHOOGTE / 2 - 200, 800, SPEELVELDHOOGTE / 2 + 100)
         fill('black')
+    break;
     }
     
   }
