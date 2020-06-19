@@ -25,39 +25,6 @@ var achtergrondImage;
 
 var spelerX = 200; // x-positie van speler
 var spelerY = 100; // y-positie van speler
-<<<<<<< HEAD
-var spelerImage;
-var vijandImageGroot;
-var vijandImageMiddel;
-var vijandImageKlein;
-var achtergrond;
-
-const SPEELVELDBREEDTE = 1280;
-const SPEELVELDHOOGTE = 720;
-const AANTALVIJANDENGROOT = 2;
-const AANTALVIJANDENMIDDEL = 1;
-const AANTALVIJANDENKLEIN = 2;
-
-var vijandenGrootX = [];   // x-positie van vijand
-var vijandenGrootY = [];   // y-positie van vijand
-var vijandenMiddelX = [];   
-var vijandenMiddelY = [];   
-var vijandenKleinX = [];   
-var vijandenKleinY = [];   
-var vijandenSnelheid = []; // horizontale snelheid van vijand
-
-var timerSec = 0; // aantal behaalde punten = behaalde tijd
-var timerMin = 0;
-var timerMiliSec = 0;
-
-function preload() {
-    spelerImage = loadImage('afbeeldingen/plaatje_raket.png');
-    vijandImageGroot = loadImage('afbeeldingen/asteroid_groot.png');
-    vijandImageMiddel = loadImage('afbeeldingen/asteroid_middel.png');
-    vijandImageKlein = loadImage('afbeeldingen/asteroid_klein.png');
-    achtergrond = loadImage('afbeeldingen/ruimte.jpg');
-}
-=======
 var spelerXSnelheid = 8;
 var spelerYSnelheid = 6;
 
@@ -84,7 +51,6 @@ var backGroundImage;
 var loadImage;
 
 
->>>>>>> f412e28128c31b38f1f17c4b9cb3aff5bb55c76f
 
 
 
@@ -112,97 +78,18 @@ var tekenStartscherm = function () {
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-<<<<<<< HEAD
-  
-  rect(20, 20, width - 2 * 20, height - 2 * 20);
-  image(achtergrond, 20, 20, width - 2 * 20, height - 2 * 20);
-=======
   rect(backGroundImage, 20, 20, width - 2 * 20, height - 2 * 20);
->>>>>>> f412e28128c31b38f1f17c4b9cb3aff5bb55c76f
 };
 
 
 /**
  * Tekent de vijand
  */
-<<<<<<< HEAD
-var tekenVijand = function() {
-    for (var i = 0; i < vijandenGrootX.length; i++) {
-        image(vijandImageGroot, vijandenGrootX[i], vijandenGrootY[i]);
-    };
-
-    for (var j = 0; j < vijandenMiddelX.length; j++) {
-        image(vijandImageMiddel, vijandenMiddelX[j], vijandenMiddelY[j]);
-    };
-
-    for (var k = 0; k < vijandenKleinX.length; k++) {
-        image(vijandImageKlein, vijandenKleinX[k], vijandenKleinY[k]);
-    };
-    
-};
-
-/**
- * Beweegt vijand
- */
-var beweegVijand = function() {
-    for (var i = 0; i < vijandenGrootX.length; i++) {
-        vijandenGrootY[i] = vijandenGrootY[i] + vijandenSnelheid[i];
-
-        if (vijandenGrootY[i] > SPEELVELDHOOGTE + 200) {
-            vijandWeg(i);
-            nieuweVijand();
-        }
-    };
-    for (var j = 0; j < vijandenMiddelX.length; j++) {
-        vijandenMiddelY[j] = vijandenMiddelY[j] + vijandenSnelheid[j];
-
-        if (vijandenMiddelY[j] > SPEELVELDHOOGTE + 200) {
-            vijandWeg(j);
-            nieuweVijand();
-        }
-    };
-    for (var k = 0; k < vijandenKleinX.length; k++) {
-        vijandenKleinY[k] = vijandenKleinY[k] + vijandenSnelheid[k];
-
-        if (vijandenKleinY[k] > SPEELVELDHOOGTE + 200) {
-            vijandWeg(k);
-            nieuweVijand();
-        }
-    };
-};
-
-/**
- * Haalt vijand weg
- */
-function vijandWeg(nummer) {
-    vijandenGrootX.splice(nummer, 1);
-    vijandenGrootY.splice(nummer, 1);
-    vijandenMiddelX.splice(nummer, 1);
-    vijandenMiddelY.splice(nummer, 1);
-    vijandenKleinX.splice(nummer, 1);
-    vijandenKleinY.splice(nummer, 1);
-    vijandenSnelheid.splice(nummer, 1);
-}
-
-/**
- * Maakt nieuwe vijand 
- */
-function nieuweVijand() {
-    vijandenGrootX.push(random(5, SPEELVELDBREEDTE - 10))
-    vijandenGrootY.push(random(-500, -100));
-    vijandenMiddelX.push(random(5, SPEELVELDBREEDTE - 10))
-    vijandenMiddelY.push(random(-500, -100));
-    vijandenKleinX.push(random(5, SPEELVELDBREEDTE - 10))
-    vijandenKleinY.push(random(-500, -100));
-    vijandenSnelheid.push(random(5, 13));
-}
-=======
 var tekenVijand = function(x, y) {
     image(img2,50,50);
 };
 
 
->>>>>>> f412e28128c31b38f1f17c4b9cb3aff5bb55c76f
 
 /**
  * Tekent en beweegt de speler
@@ -210,18 +97,6 @@ var tekenVijand = function(x, y) {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-<<<<<<< HEAD
-  fill("white");
-  image(spelerImage, spelerX, spelerY);
-};
-
-/**
- * Beweegt speler met muis
- */
-var beweegSpeler = function() {
-    var muisXPos = mouseX;
-    var muisYPos = mouseY;
-=======
   image(img, mouseX, mouseY);
 };
 
@@ -257,43 +132,12 @@ var beweegVijand = function() {
         }
     }
 };
->>>>>>> f412e28128c31b38f1f17c4b9cb3aff5bb55c76f
 
     var maxX = SPEELVELDBREEDTE - 80;
     var minX = 20;
     var maxY = SPEELVELDHOOGTE - 80;
     var minY = 20;
 
-<<<<<<< HEAD
-    if (muisXPos > maxX) {
-        muisXPos = maxX;
-    }
-    else if(muisXPos < minX) {
-        muisXPos = minX;
-    };
-    spelerX = muisXPos;
-
-    if (muisYPos > maxY) {
-        muisYPos = maxY;
-    }
-    else if(muisYPos < minY) {
-        muisYPos = minY;
-    };
-    spelerY = muisYPos;
-};
-
-
-
-/**
- * Zoekt uit of de vijand is geraakt
- * @returns {boolean} true als vijand is geraakt
- */
-var checkVijandGeraakt = function() {
-
-return false;
-};
-
-=======
 /**
  * Kijkt wat de toetsen/muis etc zijn.
  * Updatet globale variabele spelerX en spelerY
@@ -303,7 +147,6 @@ var beweegSpeler = function() {
 };
 
 
->>>>>>> f412e28128c31b38f1f17c4b9cb3aff5bb55c76f
 
 /**
  * Zoekt uit of de speler is geraakt
@@ -311,8 +154,14 @@ var beweegSpeler = function() {
  * @returns {boolean} true als speler is geraakt
  */
 var checkSpelerGeraakt = function() {
-    
-  return false;
+    for (var i = 0; i < vijandenX.length; i++){
+        if (spelStatus === SPELEN) {
+            if(collideRectRect(spelerX, spelerY, vijandenX[i], vijandenY[i]) console.log('De speler is geraakt door een vijand');
+            return true;
+        }
+        
+    }
+
 };
 
 
@@ -321,12 +170,7 @@ var checkSpelerGeraakt = function() {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function() {
-    var gameOver = false;
-    for 
-            gameOver= true;
-        }
-    }
-  return gameOver;
+
 };
 
 
@@ -361,8 +205,6 @@ var tekenTimer = function() {
  */
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
-<<<<<<< HEAD
-=======
   createCanvas(SPEELVELDBREEDTE, SPEELVELDHOOGHTE);
 
   /*
@@ -378,7 +220,6 @@ function setup() {
   */
  
   // Kleur de achtergrond blauw, zodat je het kunt zien
->>>>>>> f412e28128c31b38f1f17c4b9cb3aff5bb55c76f
   background('blue');
   createCanvas(SPEELVELDBREEDTE, SPEELVELDHOOGTE);
 
@@ -421,28 +262,6 @@ function draw() {
 
 
     case SPELEN:
-<<<<<<< HEAD
-    beweegVijand();
-    beweegSpeler();
-    rect(0,0,SPEELVELDBREEDTE,SPEELVELDHOOGTE);
-    tekenVeld();
-    tekenSpeler();
-    tekenVijand();
-    tekenTimer();
-
-    
-    if (checkGameOver()) {
-        spelStatus= GAMEOVER;
-    }
-    break;
-    case GAMEOVER:
-        gameOverscherm();
-    }
-    
-  }
-
-
-=======
       beweegVijand();
       beweegSpeler();
       
@@ -458,20 +277,23 @@ function draw() {
 
       background(backGroundImage);
       beweegSpeler(); 
-      respawnVijand();
+      respawnViLjand();
       tekenVeld();
         tekenSpeler(spelerX, spelerY);
         tekenTimer();
       checkGameOver();
 
-      if (checkGameOver()) {
+      if (checkGameOver()) { 
         spelStatus = GAMEOVER;
-        background;
+        background(0, 0, 255); // gameover scherm
+            fill('black');
+            textSize( 85);
+            textFont('Helvetica');
+            text('GAME OVER', 400, 140, 500, 240);
         tekenTimer();
         clearTimeout();
       }
       case GAMEOVER:
       break; 
   }
-} */
->>>>>>> f412e28128c31b38f1f17c4b9cb3aff5bb55c76f
+} 
